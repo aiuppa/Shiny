@@ -8,7 +8,10 @@ library("shiny")
 #separation of server and UI)
 #calling the app that lives in the directory newdir/ is done by
 #runApp("newdir")
-runExample("01_hello")
+#premade example from the web:
+#runExample("01_hello")
+#the name of this app, though can't include this call in the app code:
+#runApp("helloWorld.R")
 
 #define UI 
 ui <- fluidPage(
@@ -20,14 +23,19 @@ ui <- fluidPage(
       #create a slider for number of bins, this is input
       sliderInput(inputId = "bins",
                   label = "Number of bins:",
-                  min = 1,
+                  min = 5,
                   max = 50, 
                   value = 30)
     ),
     #panel to display outputs
     mainPanel(
       #create a histogram for output
-      plotOutput(outputId = "distPlot")
+      plotOutput(outputId = "distPlot"),
+      h1("Practicing my html skills", align = "center"),
+      h3("Oh yeah these are kool", align = "left"),
+      h6("Basically a professional app builder.", align = "right"),
+      code("look @ me calling your attention to this important text"),
+      img(src="fabric-2642229_960_720.jpg", height = 60, width = 70)
     )
   )
 )
@@ -40,8 +48,11 @@ server <- function(input, output){
     bins <- seq(min(x), max(x), length.out = input$bins + 1)
     #call to renderPlot is wrapper for indicating histogram is
     #reactive and should re-execute automatically when input$bins changes
-    hist(x, breaks = bins, col = "75AADB", border = "white",
+    hist(x, breaks = bins, col = "blue", border = "pink",
          xlab = "Waiting time to next eruption (in minutes)",
          main = "Histogram of Waiting Times")
   })
 }
+
+#script ends with call to shinyApp
+shinyApp(ui = ui, server = server)
